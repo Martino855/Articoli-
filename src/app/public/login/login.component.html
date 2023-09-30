@@ -1,1 +1,20 @@
-<p>login works!</p>
+<div class="d-flex justify-content-center" id="login">
+<form [formGroup]="loginForm" (ngSubmit)="login()" class="p-3 border border-4 border-primary">
+    <div class="m-2">
+      <label class="m-2">Email: </label>
+      <input type="username" name="username" formControlName="username"/>
+      <p *ngIf="loginForm.controls['username'].errors">{{loginForm.controls['username'].errors |json}}</p>
+    </div>
+    <div class="m-2">
+      <label class="m-2">Password: </label>
+      <input type="password" name="password"  formControlName="password"/>
+      <p *ngIf="loginForm.controls['password'].errors"> {{loginForm.controls['password'].errors |json}}</p>
+  
+    </div>
+  
+    <div>
+      <input  class="btn btn-outline-primary" type="submit" value="Login"/>
+    </div>
+</form>
+</div>
+  
