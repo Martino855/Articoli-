@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { Post } from 'src/app/models/post.model';
 import { PostService } from 'src/app/services/post.service';
 
@@ -9,22 +10,38 @@ import { PostService } from 'src/app/services/post.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  post?: Post[];
+  posts?: Post[];
+  post?: Post
+  posts$: BehaviorSubject<Post[]>
+  newPostTitle:string = '';
+  newPostContent:string = ''
   constructor(private postService: PostService, private router: Router) {
     this.getPost();
-  }
-  getPost() {
-    this.postService.getPost().subscribe(
-      (res: Post[]) => {        
-        this.post = res;
+     this.posts$ = new BehaviorSubject<Post[]>([]);
+    this.postService.getPost$().subscribe(
+      (res: Post[]) => {
+        this.posts$.next(res);
       },
       (err: any) => {
         console.log(err, '****errore');
       }
     );
   }
-  
+
+
+  getPost() {
+    this.postService.getPost().subscribe(
+      (res: Post[]) => {
+        this.posts = res;
+      },
+      (err: any) => {
+        console.log(err, '****errore');
+      }
+    );
+  }
+
   goToPublic() {
     this.router.navigate(['public']);
   }
+
 }

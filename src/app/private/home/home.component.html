@@ -1,9 +1,19 @@
-<div>
-  <pre>
-        {{ post | json }}
-    </pre
-  >
+<div *ngFor="let p of posts">
+  <div class="card" style="width: 10rem">
+    <div class="card-body">
+      <h5 class="card-title">{{ p.title }}</h5>
+      <h6 class="card-subtitle mb-2 text-body-secondary">{{ p.status }}</h6>
+      <p class="card-text">
+        {{ p.content }}
+      </p>
+    </div>
+  </div>
 </div>
+
+<!-- <button class="btn btn-outline-warning" (click)="addNewPost()">
+ Add new Post
+</button> -->
+
 <button class="btn btn-outline-danger" (click)="goToPublic()">
-  go to login
+  Go to login
 </button>

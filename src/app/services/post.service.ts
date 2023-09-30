@@ -15,7 +15,6 @@ export class PostService {
 
   constructor(private http: HttpClient) {
     const localPosts = window.localStorage.getItem('posts');
-    console.log(localPosts);
     this.posts = localPosts ? JSON.parse(localPosts) : this.getPost();
   }
 
@@ -29,35 +28,18 @@ export class PostService {
     this.posts$.next(this.posts);
   }
 
-  addTask(i: number) {
-    const newPost = new Post({
-      id: i,
-      title: 'Nuovo titolo',
-      content: 'Contenuto vuoto',
-      status: 'draft',
-    });
-    this.posts.push(newPost);
-    this.update();
+  getPost$(): Observable<Post[]> {
+    return this.posts$.asObservable();
   }
 
-  deleteTask(post:Post){
-    const index = this.posts.indexOf(post)
-    this.posts.splice(index,1)
-    this.update()
-  }
-
-  editTask(post: Post){
-    console.log('edita task', post);
-    const i = this.posts.indexOf(post)
-    this.posts[i] = new Post(post.id);
-    this.update();
-  }
-
-  changeTaskStatus(post: Post){
-    console.log('cambia stato al post', post);
-    const i = this.posts.indexOf(post);
-    post.status = 'pending';
-    this.posts[i] = new Post(post);
-    this.update();
-  }
+  // addNewPost(title: string, content: string,): Observable<any> {
+  //   return this.http.post(`${this.BaseUrl}?content=${content}&title=${title}`).pipe(
+  //       map((p:any) => {
+  //         const newPost = new Post(p);
+  //         this.posts.push(newPost);
+  //         this.update();
+  //         return newPost;
+  //       })
+  //     );
+  // }
 }

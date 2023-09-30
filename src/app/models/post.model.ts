@@ -1,5 +1,5 @@
 export interface IPost {
-  id: number;
+  id?: number;
   date?: string;
   date_gmt?: string;
   guid?: Guid;
@@ -9,10 +9,8 @@ export interface IPost {
   status: 'publish' | 'future' | 'draft' | 'pending' | 'private';
   type?: string;
   link?: string;
-  title: {
-    rendered: string;
-  };
-  content: Content;
+  title: { rendered: string };
+  content: { rendered: string; protected: boolean };
   excerpt?: Excerpt;
   author?: number;
   featured_media?: number;
@@ -27,7 +25,7 @@ export interface IPost {
   _links?: Links;
 }
 export class Post {
-  id: number;
+  id?: number;
   title: string;
   content: string;
   status: 'publish' | 'future' | 'draft' | 'pending' | 'private';
@@ -43,12 +41,6 @@ export interface Guid {
   rendered: string;
 }
 
-
-
-export interface Content {
-  rendered: string;
-  protected: boolean;
-}
 
 export interface Excerpt {
   rendered: string;
