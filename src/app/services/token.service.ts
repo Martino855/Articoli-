@@ -13,7 +13,7 @@ export class TokenService {
   token: IToken | null;
   token$: BehaviorSubject<any | null>;
   private readonly LOCALSTORAGEKEY: string = '24OreBs-user';
-  private readonly BASE_URL: string = 'https://24obs.glue-hosting.com/wp-json/jwt-auth/v1/token';
+  private readonly BASE_URL: string = 'https://24obs.glue-hosting.com/wp-json/jwt-auth/v1/';
 
   constructor(private http:HttpClient) {
     const t: string | null = window.localStorage.getItem(this.LOCALSTORAGEKEY);
