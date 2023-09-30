@@ -70,8 +70,8 @@ export class TokenService {
       .pipe(
         tap((r: any) => {
           this.setToken({
-            access_token: r.access_token,
-            refresh_token: r.refresh_token,
+            token: r.token,
+            // refresh_token: r.refresh_token,
           });
         })
       );
