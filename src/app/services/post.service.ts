@@ -42,4 +42,12 @@ export class PostService {
   //       })
   //     );
   // }
+
+  deletePost(id: number) {
+    // {{site}}/wp-json/wp/v2/posts/{{postId}}
+    return this.http.delete(`https://24obs.glue-hosting.com/wp-json/wp/v2/posts/${id}`)
+    // NON FUNZIONA
+  }
+
+
 }

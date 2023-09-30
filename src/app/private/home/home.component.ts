@@ -11,7 +11,7 @@ import { PostService } from 'src/app/services/post.service';
 })
 export class HomeComponent {
   posts?: Post[];
-  post?: Post
+  post?: Post;
   posts$: BehaviorSubject<Post[]>
   newPostTitle:string = '';
   newPostContent:string = ''
@@ -38,6 +38,12 @@ export class HomeComponent {
         console.log(err, '****errore');
       }
     );
+  }
+
+  deletePost(id:number){
+    this.postService.deletePost(id)
+    console.log(id);
+    
   }
 
   goToPublic() {

@@ -6,6 +6,7 @@
       <p class="card-text">
         {{ p.content }}
       </p>
+      <button class="btn btn-danger" (click)="deletePost(p.id)">Delete</button>
     </div>
   </div>
 </div>
@@ -13,6 +14,7 @@
 <!-- <button class="btn btn-outline-warning" (click)="addNewPost()">
  Add new Post
 </button> -->
+
 
 <button class="btn btn-outline-danger" (click)="goToPublic()">
   Go to login

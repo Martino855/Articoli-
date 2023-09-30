@@ -1,5 +1,5 @@
 export interface IPost {
-  id?: number;
+  id: number;
   date?: string;
   date_gmt?: string;
   guid?: Guid;
@@ -25,7 +25,7 @@ export interface IPost {
   _links?: Links;
 }
 export class Post {
-  id?: number;
+  id: number;
   title: string;
   content: string;
   status: 'publish' | 'future' | 'draft' | 'pending' | 'private';
