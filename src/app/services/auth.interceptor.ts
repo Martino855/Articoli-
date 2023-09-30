@@ -3,25 +3,31 @@ import {
   HttpRequest,
   HttpHandler,
   HttpEvent,
-  HttpInterceptor
+  HttpInterceptor,
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { TokenService } from './token.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
+  constructor(private tokenService: TokenService) {}
 
-  constructor(private tokenService:TokenService) {}
+  intercept(
+    request: HttpRequest<unknown>,
+    next: HttpHandler
+  ): Observable<HttpEvent<unknown>> {
+    const excludes: string[] = [
+      'https://24obs.glue-hosting.com/wp-json/jwt-auth/v1/token',
+    ];
 
-  intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<unknown>> {
-    const miaRichiesta = request.clone(
-      {
-        setHeaders: {
-          'Authorization': `Bearer ${this.tokenService.getToken()?.access_token}`
-        }
-      }
-    )
+    if (excludes.includes(request.url)) {
+      return next.handle(request);
+    }
+    const miaRichiesta = request.clone({
+      setHeaders: {
+        Authorization: `Bearer ${this.tokenService.getToken()?.access_token}`,
+      },
+    });
     return next.handle(miaRichiesta);
   }
-  
 }
