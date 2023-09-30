@@ -15,7 +15,7 @@ export class HomeComponent {
   }
   getPost() {
     this.postService.getPost().subscribe(
-      (res: Post[]) => {
+      (res: Post[]) => {        
         this.post = res;
       },
       (err: any) => {
@@ -23,6 +23,7 @@ export class HomeComponent {
       }
     );
   }
+  
   goToPublic() {
     this.router.navigate(['public']);
   }
