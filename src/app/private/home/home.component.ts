@@ -14,7 +14,7 @@ export class HomeComponent {
   post?: Post;
   posts$: BehaviorSubject<Post[]>
   newPostTitle:string = 'Titolo del post';
-  newPostContent:string = 'Testo del post';
+  newPostContent:string = 'Ciao';
 
   constructor(private postService: PostService, private router: Router) {
     this.getPost();
@@ -55,8 +55,8 @@ export class HomeComponent {
     this.postService.addNewPost(this.newPostTitle, this.newPostContent).subscribe(
       (newPost: Post) => {
         console.log('Nuovo post aggiunto:', newPost);
-        this.newPostTitle = 'Titolo del Post';
-        this.newPostContent = 'Testo del Post';
+        this.newPostTitle ='';
+        this.newPostContent='';
       },
       (error: any) => {
         console.error('Errore del nuovo post:', error);

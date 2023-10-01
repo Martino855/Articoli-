@@ -15,12 +15,12 @@ export class PostService {
 
   constructor(private http: HttpClient) {
     const localPosts = window.localStorage.getItem('posts');
-    this.posts = localPosts ? JSON.parse(localPosts) : this.getPost();;
+    this.posts = localPosts ? JSON.parse(localPosts) : [];
   }
 
   getPost(): Observable<Post[]> {
     return this.http
-      .get(`${this.BaseUrl}?filter[publish]=country&filter[10]=-1`)
+      .get(`${this.BaseUrl}?filter[all]=country&filter[10]=-1`)
       .pipe(map((r: any) => {
         console.log('Dati ricevuti dal server:', r);
         return r.map((p: IPost) => new Post(p));
