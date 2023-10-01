@@ -15,13 +15,16 @@ export class PostService {
 
   constructor(private http: HttpClient) {
     const localPosts = window.localStorage.getItem('posts');
-    this.posts = localPosts ? JSON.parse(localPosts) : this.getPost();
+    this.posts = localPosts ? JSON.parse(localPosts) : this.getPost();;
   }
 
   getPost(): Observable<Post[]> {
     return this.http
-      .get(this.BaseUrl, {})
-      .pipe(map((r: any) => r.map((p: IPost) => new Post(p))));
+      .get(`${this.BaseUrl}?filter[publish]=country&filter[10]=-1`)
+      .pipe(map((r: any) => {
+        console.log('Dati ricevuti dal server:', r);
+        return r.map((p: IPost) => new Post(p));
+      }));
   }
 
   private update() {
@@ -32,21 +35,21 @@ export class PostService {
     return this.posts$.asObservable();
   }
 
-  // addNewPost(title: string, content: string,): Observable<any> {
-  //   return this.http.post(`${this.BaseUrl}?content=${content}&title=${title}`).pipe(
-  //       map((p:any) => {
-  //         const newPost = new Post(p);
-  //         this.posts.push(newPost);
-  //         this.update();
-  //         return newPost;
-  //       })
-  //     );
-  // }
+  addNewPost(title: string, content: string): Observable<Post> {
+    //IL POST VUOLE DUE PARAMETRI, QUINDI AGGIUNGO UN OGGETTO VUOTO PERCHE' IL BODY è OBBLIGATORIO
+    return this.http.post(`${this.BaseUrl}?content=${content}&title=${title}&status=publish`, {}).pipe(
+      map((p: any) => {
+        const newPost = new Post(p);
+        this.posts.push(newPost);
+        this.update();
+        return newPost;
+      })
+    );
+  }
+  
 
   deletePost(id: number) {
-    // {{site}}/wp-json/wp/v2/posts/{{postId}}
     return this.http.delete(`https://24obs.glue-hosting.com/wp-json/wp/v2/posts/${id}`)
-    // NON FUNZIONA
   }
 
 
