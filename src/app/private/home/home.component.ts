@@ -13,12 +13,12 @@ export class HomeComponent {
   posts?: Post[];
   post?: Post;
   posts$: BehaviorSubject<Post[]>
-  newPostTitle:string = 'Titolo del post';
-  newPostContent:string = 'Ciao';
+  newPostTitle: string = 'Titolo del post';
+  newPostContent: string = 'Ciao';
 
   constructor(private postService: PostService, private router: Router) {
     this.getPost();
-     this.posts$ = new BehaviorSubject<Post[]>([]);
+    this.posts$ = new BehaviorSubject<Post[]>([]);
     this.postService.getPost$().subscribe(
       (res: Post[]) => {
         this.posts$.next(res);
@@ -41,29 +41,31 @@ export class HomeComponent {
     );
   }
 
-  deletePost(id:number){
+  deletePost(id: number) {
     this.postService.deletePost(id).subscribe(
-      ()=>{console.log('post cancellato');
+      () => {
+        console.log('post cancellato');
       },
-      (error)=>{console.error('errore nella cancellazione',error)}
+      (error) => { console.error('errore nella cancellazione', error) }
     )
     console.log(id);
-    
+
   }
 
   addNewPost() {
     this.postService.addNewPost(this.newPostTitle, this.newPostContent).subscribe(
       (newPost: Post) => {
         console.log('Nuovo post aggiunto:', newPost);
-        this.newPostTitle ='';
-        this.newPostContent='';
+        this.newPostTitle = '';
+        this.newPostContent = '';
       },
       (error: any) => {
         console.error('Errore del nuovo post:', error);
       }
     );
   }
-  
+
+
 
   goToPublic() {
     this.router.navigate(['public']);
