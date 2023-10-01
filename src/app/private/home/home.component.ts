@@ -43,12 +43,11 @@ export class HomeComponent {
 
   deletePost(id: number) {
     this.postService.deletePost(id).subscribe(
-      () => {
-        console.log('post cancellato');
+      (r) => {
+        console.log('post cancellato',r);
       },
       (error) => { console.error('errore nella cancellazione', error) }
     )
-    console.log(id);
 
   }
 
