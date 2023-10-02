@@ -17,6 +17,7 @@ export class PostService {
     const localPosts = window.localStorage.getItem('posts');
     this.posts$ = new BehaviorSubject(this.posts);
     this.posts = localPosts ? JSON.parse(localPosts) : [];
+    // this.getPost().subscribe() si può anche fare così mettendo il metodo Private
   }
 
   getPost(): Observable<Post[]> {

@@ -15,15 +15,16 @@
     </div>
   </div>
 </div>
-
 <div class="m-3">
 <label for="title">New Title</label>
 <input [(ngModel)]="newPostTitle" />
 <label for="content">New Content</label>
 <input [(ngModel)]="newPostContent" />
-<button class="btn btn-outline-warning" (click)="addNewPost()">
+
+<i class="bi bi-plus-circle-fill m-2" (click)="addNewPost()"></i>
+<!-- <button class="btn btn-outline-warning" (click)="addNewPost()">
   Add new Post
-</button>
+</button> -->
 
 </div>
 

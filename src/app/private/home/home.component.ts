@@ -20,6 +20,7 @@ export class HomeComponent {
   constructor(private postService: PostService, private router: Router, private modalService: NgbModal) {
     this.posts$ = this.postService.getPost$();
     this.getPost();
+    //se nel servizio si fa getPost().subscribe qui non la si chiama
   }
 
 
