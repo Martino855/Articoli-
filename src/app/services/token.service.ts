@@ -71,7 +71,6 @@ export class TokenService {
         tap((r: any) => {
           this.setToken({
             token: r.token,
-            // refresh_token: r.refresh_token,
           });
         })
       );

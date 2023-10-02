@@ -52,7 +52,6 @@ export class PostService {
   }
 
   editPost(id:number, content:string, title:string){
-    // {{site}}/wp-json/wp/v2/posts/{{postId}}?content={{content}}&title={{title}}
     return this.http.post(`${this.BaseUrl}/${id}?content=${content}&title=${title}`, {})
   }
 
