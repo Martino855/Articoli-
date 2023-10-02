@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Post } from 'src/app/models/post.model';
 import { PostService } from 'src/app/services/post.service';
 
@@ -12,28 +12,21 @@ import { PostService } from 'src/app/services/post.service';
 export class HomeComponent {
   posts?: Post[];
   post?: Post;
-  posts$: BehaviorSubject<Post[]>
+  posts$: Observable<Post[]>
   newPostTitle: string = 'Titolo del post';
   newPostContent: string = 'Ciao';
+  currentPost: Post | undefined;
 
   constructor(private postService: PostService, private router: Router) {
+    this.posts$ = this.postService.getPost$();
     this.getPost();
-    this.posts$ = new BehaviorSubject<Post[]>([]);
-    this.postService.getPost$().subscribe(
-      (res: Post[]) => {
-        this.posts$.next(res);
-      },
-      (err: any) => {
-        console.log(err, '****errore');
-      }
-    );
   }
 
 
   getPost() {
     this.postService.getPost().subscribe(
-      (res: Post[]) => {
-        this.posts = res;
+      (res) => {
+        console.log((res))
       },
       (err: any) => {
         console.log(err, '****errore');
@@ -55,7 +48,7 @@ export class HomeComponent {
     this.postService.addNewPost(this.newPostTitle, this.newPostContent).subscribe(
       (newPost: Post) => {
         console.log('Nuovo post aggiunto:', newPost);
-        this.newPostTitle = '';
+        this.newPostTitle = '...';
         this.newPostContent = '';
       },
       (error: any) => {
@@ -65,9 +58,29 @@ export class HomeComponent {
   }
 
 
-
   goToPublic() {
     this.router.navigate(['public']);
+  }
+
+  editPost(currentPost:Post){
+    this.currentPost = currentPost;
+
+  }
+
+  saveEdit(){
+    if (this.currentPost) {
+      this.postService.editPost(this.currentPost.id, this.currentPost.content, this.currentPost.title).subscribe({
+      next: (value)=>{
+        this.currentPost = undefined;
+        console.log(value);
+
+      },
+      error: (e)=>{
+        console.error('errore',e)
+      }
+      })
+    }
+    
   }
 
 }

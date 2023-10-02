@@ -27,11 +27,7 @@ export class TokenService {
   }
 
   isAuthenticated(): boolean {
-    if (this.user?.authenticated) {
-      return false;
-    } else {
-      return true;
-    }
+    return this.token ? true : false;
   }
 
   getToken$(): Observable<IToken | null> {

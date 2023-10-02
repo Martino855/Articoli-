@@ -1,21 +1,40 @@
 <div class="d-flex justify-content-evenly mt-3">
-<div *ngFor="let p of posts">
-  <div class="card" style="width: 10rem" id="card">
-    <div class="card-body">
-      <h5 class="card-title">{{ p.title }}</h5>
-      <h6 class="card-subtitle mb-2 text-body-secondary">{{ p.status }}</h6>
-      <p class="card-text">
-        {{ p.content }}
-      </p>
-      <button class="btn btn-danger" (click)="deletePost(p.id)">Delete</button>
+  <div *ngFor="let p of posts$ | async">
+    <div class="card" [ngClass]="{ selected: p.id == this.currentPost?.id }">
+      <div class="card-body">
+        <h5 class="card-title">{{ p.title }}</h5>
+        <h6 class="card-subtitle mb-2 text-body-secondary">{{ p.status }}</h6>
+        <p class="card-text">
+          {{ p.content }}
+        </p>
+        <button class="btn btn-danger" (click)="deletePost(p.id)">
+          Delete
+        </button>
+        <button class="btn btn-warning mx-2" (click)="editPost(p)">Edit</button>
+      </div>
     </div>
   </div>
 </div>
-</div>
+
+<div class="m-3">
+<label for="title">New Title</label>
+<input [(ngModel)]="newPostTitle" />
+<label for="content">New Content</label>
+<input [(ngModel)]="newPostContent" />
 <button class="btn btn-outline-warning" (click)="addNewPost()">
- Add new Post
+  Add new Post
 </button>
 
+</div>
+
+<div class="m-3" *ngIf="currentPost">
+<label for="title">Edit Title</label>
+<input [(ngModel)]="currentPost!.title"/>
+<label for="content">Edit Content</label>
+<input [(ngModel)]="currentPost!.content" />
+
+<button class="btn btn-outline-primary" (click)="saveEdit()">Save Edit</button>
+</div>
 
 <button class="btn btn-outline-danger" (click)="goToPublic()">
   Go to login
