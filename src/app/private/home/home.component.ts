@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Post } from 'src/app/models/post.model';
 import { PostService } from 'src/app/services/post.service';
@@ -10,14 +11,13 @@ import { PostService } from 'src/app/services/post.service';
   styleUrls: ['./home.component.scss'],
 })
 export class HomeComponent {
-  posts?: Post[];
   post?: Post;
   posts$: Observable<Post[]>
   newPostTitle: string = 'Titolo del post';
   newPostContent: string = 'Ciao';
   currentPost: Post | undefined;
 
-  constructor(private postService: PostService, private router: Router) {
+  constructor(private postService: PostService, private router: Router, private modalService: NgbModal) {
     this.posts$ = this.postService.getPost$();
     this.getPost();
   }
@@ -48,8 +48,8 @@ export class HomeComponent {
     this.postService.addNewPost(this.newPostTitle, this.newPostContent).subscribe(
       (newPost: Post) => {
         console.log('Nuovo post aggiunto:', newPost);
-        this.newPostTitle = '...';
-        this.newPostContent = '';
+        this.newPostTitle = 'Titolo';
+        this.newPostContent = 'Contenuto';
       },
       (error: any) => {
         console.error('Errore del nuovo post:', error);

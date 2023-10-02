@@ -21,7 +21,7 @@ export class PostService {
 
   getPost(): Observable<Post[]> {
     return this.http
-      .get(`${this.BaseUrl}?filter[publish]=country&filter[10]=-1`)
+      .get(`${this.BaseUrl}?filter[publish]=posts&filter[10]=-1`)
       .pipe(map((r: any) => {
         console.log('Dati ricevuti dal server:', r);
         this.posts = r.map((p: IPost) => new Post(p));

@@ -11,7 +11,7 @@ import { IToken } from '../models/token.model';
 export class TokenService {
   user?: IUser | null;
   token: IToken | null;
-  token$: BehaviorSubject<any | null>;
+  // token$: BehaviorSubject<any | null>;
   private readonly LOCALSTORAGEKEY: string = '24OreBs-user';
   private readonly BASE_URL: string =
     'https://24obs.glue-hosting.com/wp-json/jwt-auth/v1/token';
@@ -23,16 +23,16 @@ export class TokenService {
     } else {
       this.token = null;
     }
-    this.token$ = new BehaviorSubject(this.token);
+    // this.token$ = new BehaviorSubject(this.token);
   }
 
   isAuthenticated(): boolean {
     return this.token ? true : false;
   }
 
-  getToken$(): Observable<IToken | null> {
-    return this.token$.asObservable();
-  }
+  // getToken$(): Observable<IToken | null> {
+  //   return this.token$.asObservable();
+  // }
 
   getToken() {
     return this.token;
@@ -44,18 +44,18 @@ export class TokenService {
       this.LOCALSTORAGEKEY,
       JSON.stringify(this.token)
     );
-    this.update();
+    // this.update();
   }
 
   deleteTokens() {
     this.token = null;
     window.localStorage.removeItem(this.LOCALSTORAGEKEY);
-    this.update();
+    // this.update();
   }
 
-  private update() {
-    this.token$.next(this.token);
-  }
+  // private update() {
+  //   this.token$.next(this.token);
+  // }
 
   login(username: string, password: string): Observable<any> {
     return this.http
