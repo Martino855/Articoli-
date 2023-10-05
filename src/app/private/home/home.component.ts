@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { Post } from 'src/app/models/post.model';
 import { PostService } from 'src/app/services/post.service';
 
@@ -23,7 +23,7 @@ export class HomeComponent {
     //se nel servizio si fa getPost().subscribe qui non la si chiama
   }
 
-
+  
   getPost() {
     this.postService.getPost().subscribe(
       (res) => {
